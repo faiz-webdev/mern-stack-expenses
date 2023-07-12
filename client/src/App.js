@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import Button from '@mui/material/Button';
+import NavAppBar from "./components/NavAppBar";
+import TransactionForm from "./components/TransactionForm";
 
 const initialForm = {
   amount: 0,
@@ -47,6 +50,8 @@ function App() {
 
   return (
     <div className="App">
+      <NavAppBar />
+      <TransactionForm />     
       <form onSubmit={handleSubmit}>
         <input
           type="number"
