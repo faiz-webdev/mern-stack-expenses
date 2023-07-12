@@ -91,7 +91,7 @@ export default function TransactionForm({fetchTransactions}) {
               )}
             />
           </LocalizationProvider>
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" sx={{ width: 200, marginLeft: 5 }}>
             Submit
           </Button>
         </form>

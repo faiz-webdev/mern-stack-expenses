@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import NavAppBar from "./components/NavAppBar";
 import TransactionForm from "./components/TransactionForm";
+import TransactionsList from "./components/TransactionsList";
+import { Container } from "@mui/material";
 
 function App() {
- 
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
@@ -21,26 +22,10 @@ function App() {
   return (
     <div className="App">
       <NavAppBar />
-      <TransactionForm fetchTransactions={fetchTransactions} />     
-      <br />
-      <section>
-        <table>
-          <thead>
-            <th>Amount</th>
-            <th>Description</th>
-            <th>Date</th>
-          </thead>
-          <tbody>
-            {transactions.map((tr) => (
-              <tr>
-                <td>{tr.amount}</td>
-                <td>{tr.description}</td>
-                <td>{tr.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <Container>
+        <TransactionForm fetchTransactions={fetchTransactions} />
+        <TransactionsList transactions={transactions} />
+      </Container>
     </div>
   );
 }
