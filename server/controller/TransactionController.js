@@ -1,28 +1,30 @@
 import Transaction from "../models/Transaction.js";
 
 export const index = async (req, res) => {
-  const demo = await Transaction.aggregate([
-    {
-      $match: { user_id: req.user._id },
-    },
-    {
-      $group: {
-        _id: { $month: "$date" },
-        transactions: {
-          $push: {
-            amount: "$amount",
-            description: "$description",
-            date: "$date",
-            type: "$type",
-            _id: "$_id",
-          },
-        },
-        totalExpenses: { $sum: "$amount" },
-      },
-    },
-    { $sort: { _id: 1 } },
-  ]);
-  res.json({ data: demo });
+  // const demo = await Transaction.aggregate([
+  //   {
+  //     $match: { user_id: req.user._id },
+  //   },
+  //   {
+  //     $group: {
+  //       _id: { $month: "$date" },
+  //       transactions: {
+  //         $push: {
+  //           amount: "$amount",
+  //           description: "$description",
+  //           date: "$date",
+  //           type: "$type",
+  //           _id: "$_id",
+  //         },
+  //       },
+  //       totalExpenses: { $sum: "$amount" },
+  //     },
+  //   },
+  //   { $sort: { _id: 1 } },
+  // ]);
+  // res.json({ data: demo });
+  const data = await Transaction.find({}).sort({createdAt: -1})
+  res.json({data})
 };
 
 export const create = async (req, res) => {
