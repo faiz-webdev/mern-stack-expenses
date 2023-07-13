@@ -27,7 +27,7 @@ export default function Login() {
       password: data.get("password"),
     };
 
-    const response = await fetch("http://localhost:4000/auth/login", {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
