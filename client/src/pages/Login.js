@@ -16,13 +16,24 @@ import Container from "@mui/material/Container";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 export default function Login() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const form = {
       email: data.get("email"),
       password: data.get("password"),
+    };
+
+    const response = await fetch("http://localhost:4000/auth/login", {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: {
+        "content-type": "application/json",
+      },
     });
+
+    const json = await response.json();
+    console.log(json);
   };
 
   return (
