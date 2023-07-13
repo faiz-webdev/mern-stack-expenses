@@ -6,16 +6,19 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Cookies from 'js-cookie';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 export default function Login() {
+    const navigate = useNavigate()
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -32,8 +35,12 @@ export default function Login() {
       },
     });
 
-    const json = await response.json();
-    console.log(json);
+    const {token} = await response.json();
+
+    if(response.ok) {
+        Cookies.set('token', token);
+        navigate('/');
+    }
   };
 
   return (
