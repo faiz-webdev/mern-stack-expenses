@@ -9,7 +9,7 @@ const router = Router();
 const auth = passport.authenticate("jwt", { session: false });
 
 // router.use("/transaction", auth, TransactionsApi);
-router.use("/transaction", TransactionsApi);
+router.use("/transaction", auth, TransactionsApi);
 router.use("/auth", AuthApi);
 router.use("/user", UserApi);
 router.use("/category", auth, CategoryApi);
