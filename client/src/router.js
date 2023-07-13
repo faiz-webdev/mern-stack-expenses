@@ -15,7 +15,7 @@ export default createBrowserRouter([
         // element: token ? <Home /> : <Navigate to="/login" replace={true} />,
         element: (
           <CheckAuth>
-            <Home></Home>
+            <Home />
           </CheckAuth>
         ),
       },

@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
@@ -13,11 +11,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Cookies from 'js-cookie';
-
+import { useDispatch } from "react-redux";
+import { getUser } from "../store/auth";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 export default function Login() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,10 +35,12 @@ export default function Login() {
       },
     });
 
-    const {token} = await response.json();
+    const {token, user} = await response.json();
 
     if(response.ok) {
         Cookies.set('token', token);
+        
+        dispatch(getUser(user));
         navigate('/');
     }
   };
