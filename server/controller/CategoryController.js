@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 
 export const destroy = async (req, res) => {
-  const categories = req.user.categories;
+  /*const categories = req.user.categories;
   const newCategories = categories.filter(
     (category) => category._id != req.params.id
   );
@@ -9,6 +9,13 @@ export const destroy = async (req, res) => {
   const user = await User.updateOne(
     { _id: req.user.id },
     { $set: { categories: newCategories } }
+  );
+  */
+
+  const user = await User.update(
+    { _id: Object(req.user.id) },
+    { $pull: { categories: { _id: req.params.id } } },
+    { multi: true }
   );
   res.json({ user });
 };
