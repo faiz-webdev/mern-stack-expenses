@@ -16,12 +16,14 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/auth";
 import CategoryForm from "../components/CategoryForm";
+import { useState } from "react";
 
 export default function Category() {
   const token = Cookies.get("token");
 
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const [editCategory, setEditCategory] = useState({});
 
   async function remove(id) {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/category/${id}`, {
@@ -38,10 +40,13 @@ export default function Category() {
       dispatch(setUser({ user: _user }));
     }
   }
+  function setEdit(category) {
+    setEditCategory(category);
+  }
 
   return (
     <Container>
-      <CategoryForm editCategory={{}} fetchTransctions={() => {}} />
+      <CategoryForm editCategory={editCategory} />
       <Typography sx={{ marginTop: 10 }} variant="h6">
         List of Categories
       </Typography>
@@ -68,7 +73,7 @@ export default function Category() {
                   <IconButton
                     color="primary"
                     component="label"
-                    // onClick={() => setEditTransaction(row)}
+                    onClick={() => setEdit(row)}
                   >
                     <EditSharpIcon />
                   </IconButton>

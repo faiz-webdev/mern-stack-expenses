@@ -15,9 +15,9 @@ const InitialForm = {
   icon: "",
 };
 
-const icons = ["User"];
+const icons = ['User'];
 
-export default function CategoryForm({ fetchTransctions, editCategory }) {
+export default function CategoryForm({ editCategory }) {
   const user = useSelector((state) => state.auth.user);
   const token = Cookies.get("token");
   const [form, setForm] = useState(InitialForm);
@@ -42,12 +42,8 @@ export default function CategoryForm({ fetchTransctions, editCategory }) {
     editCategory._id === undefined ? create() : update();
   }
 
-  function reload(res) {
+  function reload(res, _user) {
     if (res.ok) {
-      const _user = {
-        ...user,
-        categories: [...user.categories, {...form}],
-      };
       dispatch(setUser({ user: _user }));
 
       setForm(InitialForm);
@@ -63,7 +59,13 @@ export default function CategoryForm({ fetchTransctions, editCategory }) {
         Authorization: `Bearer ${token}`,
       },
     });
-    reload(res);
+
+    const _user = {
+      ...user,
+      categories: [...user.categories, { ...form }],
+    };
+
+    reload(res, _user);
   }
 
   async function update() {
@@ -78,7 +80,14 @@ export default function CategoryForm({ fetchTransctions, editCategory }) {
         },
       }
     );
-    reload(res);
+    const _user = {
+      ...user,
+      categories: user.categories.map((cat) =>
+        cat._id == editCategory._id ? form : cat
+      ),
+    };
+
+    reload(res, _user);
   }
 
   function getCategoryNameById() {
