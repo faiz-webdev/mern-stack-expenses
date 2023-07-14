@@ -23,7 +23,7 @@ export const index = async (req, res) => {
   //   { $sort: { _id: 1 } },
   // ]);
   // res.json({ data: demo });
-  const data = await Transaction.find({}).sort({createdAt: -1})
+  const data = await Transaction.find({user_id: req.user._id}).sort({createdAt: -1})
   res.json({data})
 };
 
@@ -33,7 +33,7 @@ export const create = async (req, res) => {
     amount,
     description,
     date,
-    // user_id: '1',
+    user_id: req.user._id,
     category_id,
   });
   await transaction.save();
