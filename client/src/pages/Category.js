@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../store/auth";
+import CategoryForm from "../components/CategoryForm";
 
 export default function Category() {
   const token = Cookies.get("token");
@@ -40,6 +41,7 @@ export default function Category() {
 
   return (
     <Container>
+      <CategoryForm editCategory={{}} fetchTransctions={() => {}} />
       <Typography sx={{ marginTop: 10 }} variant="h6">
         List of Categories
       </Typography>
