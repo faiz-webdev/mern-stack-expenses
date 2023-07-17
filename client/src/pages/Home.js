@@ -35,7 +35,7 @@ function Home() {
         />
 
         <TransactionsList
-          transactions={transactions}
+          data={transactions}
           fetchTransctions={fetchTransctions}
           setEditTransaction={setEditTransaction}
         />

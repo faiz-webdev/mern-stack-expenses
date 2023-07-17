@@ -31,13 +31,14 @@ export const index = async (req, res) => {
     },
     {
       $group: {
-        _id: {
-          // $month: "$date",
-          $dateToString: {
-            format: "%Y-%m",
-            date: "$date",
-          },
-        },
+        _id: { $month: "$date" },
+        // _id: {
+        //   // $month: "$date",
+        //   $dateToString: {
+        //     format: "%Y-%m",
+        //     date: "$date",
+        //   },
+        // },
         transactions: {
           $push: {
             amount: "$amount",
