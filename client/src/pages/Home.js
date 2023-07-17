@@ -28,7 +28,7 @@ function Home() {
   return (
     <div>
       <Container>
-        <TransactionChart />
+        <TransactionChart data={transactions} />
         <TransactionForm
           fetchTransctions={fetchTransctions}
           editTransaction={editTransaction}

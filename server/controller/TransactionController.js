@@ -23,8 +23,42 @@ export const index = async (req, res) => {
   //   { $sort: { _id: 1 } },
   // ]);
   // res.json({ data: demo });
-  const data = await Transaction.find({user_id: req.user._id}).sort({createdAt: -1})
-  res.json({data})
+  // const data = await Transaction.find({user_id: req.user._id}).sort({createdAt: -1})
+  // console.log(req.user._id);
+  const data = await Transaction.aggregate([
+    {
+      $match: { user_id: req.user._id },
+    },
+    {
+      $group: {
+        _id: {
+          // $month: "$date",
+          $dateToString: {
+            format: "%Y-%m",
+            date: "$date",
+          },
+        },
+        transactions: {
+          $push: {
+            amount: "$amount",
+            description: "$description",
+            date: "$date",
+            _id: "$_id",
+            typeof: "$type",
+          },
+        },
+        totalExpenses: { $sum: "$amount" },
+      },
+    },
+  //   {
+  //     $project: {
+  //         "month": "$_id",
+  //         // count: 1,
+  //         "_id": 0
+  //     }
+  // }
+  ]);
+  res.json({ data });
 };
 
 export const create = async (req, res) => {
